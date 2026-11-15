@@ -16,6 +16,10 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://alhaj-ai.github.io"),
+  alternates: {
+    canonical: "/",
+  },
   title: `${PROFILE.name} — ${PROFILE.role} (LLMs, Agent Harnesses & Fine-Tuning)`,
   description:
     "AI Engineer specializing in LLM engineering, model fine-tuning, deterministic agent harnesses, hybrid RAG, and production software systems.",
