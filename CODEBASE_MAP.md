@@ -39,5 +39,5 @@
 | `FooterSection` | `components/FooterSection.tsx` | Contact CTA with clipboard email copy + social links |
 
 ## 6. Dependency Graph & Hot Spots
-- Static assets: `public/.nojekyll`, `public/badges/deepmind-train-slm.png`, `public/badges/deepmind-build-slm.png`
+- Static assets: `public/.nojekyll`, `public/robots.txt`, `public/sitemap.xml`, `public/badges/deepmind-train-slm.png`, `public/badges/deepmind-build-slm.png`
 - Targeted skills provisioned in `.gemini/skills/`: `interactive-portfolio`, `3d-web-experience`
