@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --canvas: 250 250 252;
+  --surface: 255 255 255;
+  --surface-elevated: 244 244 247;
+  --border: 228 228 231;
+  --ink: 9 9 11;
+  --muted: 82 82 91;
+  --accent: 5 150 105;
+}
+
+.dark {
+  /* True Obsidian / Pitch Black Identity */
+  --canvas: 3 3 5;
+  --surface: 11 12 16;
+  --surface-elevated: 18 20 26;
+  --border: 36 39 46;
+  --ink: 250 250 250;
+  --muted: 161 161 170;
+  --accent: 16 185 129;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: rgb(var(--canvas));
+  color: rgb(var(--ink));
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: rgb(var(--accent) / 0.25);
+  color: rgb(var(--ink));
+}
+
+@keyframes beaconPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.55);
+  }
+  50% {
+    box-shadow: 0 0 0 7px rgba(16, 185, 129, 0);
+  }
+}
+
+.beacon-dot {
+  animation: beaconPulse 2.4s infinite ease-in-out;
+}

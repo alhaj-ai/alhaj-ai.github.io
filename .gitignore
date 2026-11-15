@@ -1,0 +1,19 @@
+# Dependencies & build output
+node_modules/
+.next/
+out/
+tsconfig.tsbuildinfo
+next-env.d.ts
+
+# Environment & local agent state
+.env
+.env.local
+.env.*.local
+.gemini/
+.deepeval/
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
