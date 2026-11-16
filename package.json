@@ -1,7 +1,7 @@
 {
   "name": "alhaj-ai-portfolio",
   "version": "1.0.0",
-  "description": "Mohammed Al-Haj — AI Engineer Portfolio (LLMs, Agent Harnesses, Fine-Tuning, Hybrid RAG, Computer Vision)",
+  "description": "Mohammed Al-Haj | AI Engineer Portfolio (LLMs, Agent Harnesses, Fine-Tuning, Hybrid RAG, Computer Vision)",
   "private": true,
   "scripts": {
     "dev": "next dev -p 3000",

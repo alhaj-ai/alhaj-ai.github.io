@@ -19,6 +19,13 @@
 - [x] [DONE] Live headless browser verification (WebGL 3D rendering, presets, filters, empty state, theme toggle, DeepMind images, 0 exceptions)
 - [x] [DONE] Create GitHub repo `alhaj-ai/alhaj-ai.github.io`, push `main`, enable GitHub Pages workflow, verify live HTTP 200 & link in `alhaj-ai/README.md`
 
+## Phase 4: Ruled Engineering Notebook Redesign & 3D LLM/RAG Architecture
+- [x] [DONE] Shared `lib/portfolio-helpers.ts` + TDD unit tests (`lib/__tests__/portfolio-helpers.test.ts`)
+- [x] [DONE] Upgrade `NeuralHarness3D` with 3 interactive views: `LLM + Harness`, `Hybrid RAG Vectors` (Tenant Qdrant cube + Top-K query rays), and `Multi-Agent Graph`
+- [x] [DONE] Implement warm ruled Engineering Notebook theme + optional Dark Ink toggle (`InteractiveParticleNetwork`, `NotebookNav`, `NotebookHero`, `NotebookToolkitAndWork`, `NotebookDemosAndJourney`, `NotebookAboutAndContact`)
+- [x] [DONE] Apply `humanizer` prose pass across all UI copy and remove unused legacy components
+- [x] [DONE] Final verification (`tsc --noEmit`, tests, `next build`), PR merge to `main`, and live GitHub Pages check
+
 ## Current Sprint
-**Active Task**: Phase 3 — Live GitHub Pages deployment & verification
-**Status**: ✅ COMPLETED
+**Active Task**: Phase 4 — Shipped Ruled Engineering Notebook & 3D LLM/RAG Architecture live on `alhaj-ai.github.io`
+**Status**: ✅ COMPLETE
