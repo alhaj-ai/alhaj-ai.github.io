@@ -1,23 +1,19 @@
-import { Navbar } from "@/components/Navbar";
-import { HeroSection } from "@/components/HeroSection";
-import { AboutAndArchitecture } from "@/components/AboutAndArchitecture";
-import { ProjectsShowcase } from "@/components/ProjectsShowcase";
-import { CredentialsAndSkills } from "@/components/CredentialsAndSkills";
-import { FooterSection } from "@/components/FooterSection";
-import { NeuralBackdrop } from "@/components/NeuralBackdrop";
+import { NotebookNav } from "@/components/NotebookNav";
+import { NotebookHero } from "@/components/NotebookHero";
+import { NotebookToolkitAndWork } from "@/components/NotebookToolkitAndWork";
+import { NotebookDemosAndJourney } from "@/components/NotebookDemosAndJourney";
+import { NotebookAboutAndContact } from "@/components/NotebookAboutAndContact";
 
 export default function HomePage() {
   return (
-    <div className="relative min-h-screen bg-canvas text-ink">
-      <NeuralBackdrop />
-      <Navbar />
-      <main id="main-content" className="relative z-10">
-        <HeroSection />
-        <AboutAndArchitecture />
-        <ProjectsShowcase />
-        <CredentialsAndSkills />
+    <div className="min-h-screen">
+      <NotebookNav />
+      <main id="main-content">
+        <NotebookHero />
+        <NotebookToolkitAndWork />
+        <NotebookDemosAndJourney />
+        <NotebookAboutAndContact />
       </main>
-      <FooterSection />
     </div>
   );
 }

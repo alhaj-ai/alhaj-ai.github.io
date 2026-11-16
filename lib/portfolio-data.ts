@@ -5,6 +5,23 @@ export type ProjectCategory =
   | "Fine-Tuning & Vision"
   | "Data & Apps";
 
+export interface PipelineNode {
+  label: string;
+  sublabel: string;
+  isGate?: boolean;
+}
+
+export interface CodeShowcaseTab {
+  id: string;
+  filename: string;
+  repoName: string;
+  repoUrl: string;
+  language: string;
+  metricBadge: string;
+  codeLines: string[];
+  traceLines: string[];
+}
+
 export interface FlagshipProject {
   id: string;
   name: string;
@@ -17,6 +34,7 @@ export interface FlagshipProject {
   problem: string;
   architecture: string;
   verification: string;
+  pipeline: PipelineNode[];
   codePaths: string[];
   traceTitle?: string;
   traceOutput?: string;
@@ -53,8 +71,12 @@ export interface CredentialItem {
 }
 
 export interface SkillGroup {
+  id: string;
   domain: string;
+  shortLabel: string;
+  summary: string;
   items: string[];
+  linkedRepos: { name: string; href: string }[];
 }
 
 export const PROFILE = {
@@ -65,12 +87,11 @@ export const PROFILE = {
     "LLMs · Agent Harnesses · Model Fine-Tuning · Hybrid RAG · Computer Vision · Backend Systems",
   availability: "Open to AI / LLM Engineer roles · Remote",
   heroThesis:
-    "I design, fine-tune, and ship production AI systems — combining PyTorch and Hugging Face model adaptation with the deterministic execution harnesses, isolated retrieval pipelines, and test suites that keep autonomous workflows reliable.",
+    "I build LLM systems, hybrid RAG pipelines, and fine-tuned models backed by clean APIs and automated tests.",
   aboutParagraphs: [
-    "I design, fine-tune, and ship production AI systems, backed by hands-on experience in LLM engineering, agent harnesses, model adaptation, hybrid RAG, and computer vision.",
-    "For language and retrieval workflows, I fine-tune Transformer and deep learning architectures with PyTorch and Hugging Face, implement hybrid vector search with tenant isolation and source grounding, and run both local open-weights models and cloud APIs.",
-    "Around the LLM itself, I build the execution harness that makes autonomy reliable: stateful orchestration, strict schema boundaries, measurable evaluations, crash recovery, latency and cost controls, and automated test suites.",
-    "Because production AI depends on the infrastructure around the model, my experience also spans computer vision and OCR pipelines, real-time speech and voice applications, distributed PySpark and SQL/NoSQL data flows, and shipping complete services with FastAPI, Django, Next.js, Flutter, Docker, and GitHub Actions.",
+    "I work across applied LLM systems, model fine-tuning, and retrieval pipelines, focusing on turning prototypes into software that holds up on real infrastructure.",
+    "For private or domain-specific workloads, I fine-tune local Transformer and vision models using PyTorch and Hugging Face Trainer, and build isolated vector search pipelines with Qdrant, FAISS, and page-level citations.",
+    "On the application side, I connect models to LangGraph workflows, FastAPI backends, Next.js interfaces, Flutter mobile apps, and real-time voice streams, with Docker builds and automated checks on GitHub Actions.",
   ],
   links: {
     github: "https://github.com/alhaj-ai",
@@ -84,23 +105,23 @@ export const PROFILE = {
 export const VERIFIED_METRICS = [
   {
     value: "14",
-    label: "CI-Verified Repos",
-    detail: "Automated pytest, build, and runtime checks on GitHub Actions",
+    label: "GitHub Repositories",
+    detail: "Open-source LLMs, RAG, agents, vision & full-stack APIs",
   },
   {
-    value: "0.9856",
-    label: "LayoutLMv3 Eval F1",
-    detail: "Token classification accuracy 0.9871 via Hugging Face Trainer",
+    value: "6",
+    label: "Flagship Systems",
+    detail: "Production builds with clean architecture and automated tests",
   },
   {
-    value: "0 calls · 813ms",
-    label: "Deterministic Replay",
-    detail: "Compiled Playwright capability graphs run with zero token spend",
+    value: "4",
+    label: "AI Credentials",
+    detail: "Google DeepMind, IBM SkillsBuild & Anthropic badges",
   },
   {
-    value: "0 duplicates",
-    label: "SIGKILL Recovery",
-    detail: "SHA-256 checkpoint ledger & worker lease fencing in Haseen-AI",
+    value: "PyTorch · RAG",
+    label: "Core Stack",
+    detail: "Local Transformers, LangGraph, Qdrant & FastAPI services",
   },
 ] as const;
 
@@ -116,11 +137,11 @@ export const ARCHITECTURE_STAGES: PipelineStage[] = [
   {
     step: "01",
     title: "Models & Fine-Tuning",
-    subtitle: "Domain adaptation with quantitative evaluation",
+    subtitle: "Training and measuring models on domain splits",
     details: [
-      "Fine-tune Transformer and vision architectures on curated domain splits with Hugging Face Trainer and PyTorch.",
-      "Benchmark baselines vs cross-lingual transfer with seqeval F1 and strict held-out validation.",
-      "Serve local open-weights models via Ollama / LM Studio alongside cloud LLM providers.",
+      "Train Transformer and vision models on split datasets with Hugging Face Trainer and PyTorch.",
+      "Compare baseline runs against joint cross-lingual training with seqeval F1 on held-out splits.",
+      "Run local open weights through Ollama or LM Studio when data stays off external APIs.",
     ],
     tools: [
       "PyTorch",
@@ -138,11 +159,11 @@ export const ARCHITECTURE_STAGES: PipelineStage[] = [
   {
     step: "02",
     title: "Retrieval & Grounding",
-    subtitle: "Multi-tenant vector search & source provenance",
+    subtitle: "Isolated vector indexes and page citations",
     details: [
-      "Partition embeddings by account into isolated Qdrant collections or tuned FAISS indexes.",
-      "Apply overlapping document chunking and CrossEncoder re-ranking for sharper context.",
-      "Bind generated answers to exact page-level citations and explicit empty/unrecognized states.",
+      "Keep each user's embeddings in its own Qdrant collection or FAISS index.",
+      "Split documents with overlapping windows and reorder matches with a CrossEncoder before answering.",
+      "Attach page numbers to answers and return explicit empty states instead of guessing.",
     ],
     tools: [
       "Qdrant",
@@ -160,11 +181,11 @@ export const ARCHITECTURE_STAGES: PipelineStage[] = [
   {
     step: "03",
     title: "LLM Execution Harness",
-    subtitle: "Deterministic guarantees wrapping model autonomy",
+    subtitle: "Checkpoints and schema guards around agent loops",
     details: [
-      "Coordinate cyclic planner-searcher-writer-critic workflows with bounded revision loops in LangGraph.",
-      "Enforce Pydantic schemas, append-only SHA-256 execution ledgers, worker lease fencing, and shadow diff sandboxes.",
-      "Compile one-time VLM browser discoveries into ARIA-anchored YAML capability graphs executed at zero LLM cost.",
+      "Cap cyclic LangGraph planner, search, and critic loops with fixed revision limits.",
+      "Check tool inputs with Pydantic, write checkpoints to an append-only SHA-256 log, expire dead worker leases, and test patches in a shadow copy.",
+      "Record one VLM browser pass into an ARIA-based YAML playbook, then replay it with zero model calls.",
     ],
     tools: [
       "LangGraph",
@@ -182,11 +203,11 @@ export const ARCHITECTURE_STAGES: PipelineStage[] = [
   {
     step: "04",
     title: "Data, Apps & Verification",
-    subtitle: "Production backends, interfaces & automated CI",
+    subtitle: "APIs, apps, data routers, and CI tests",
     details: [
-      "Engineer ETL routers scaling from Python streams to distributed PySpark with rule-based quarantine.",
-      "Ship FastAPI, Django REST, Next.js 14, Flutter offline-first mobile, and Twilio/Deepgram voice bridges.",
-      "Gate every core repository behind Docker, pytest suites, TypeScript checks, and GitHub Actions CI.",
+      "Route small files through Python streams and larger ones through PySpark, splitting bad rows out for review.",
+      "Build FastAPI and Django APIs, Next.js interfaces, offline SQLite Flutter apps, and live Twilio/Deepgram voice streams.",
+      "Check every repository with pytest suites, TypeScript checks, Docker builds, and GitHub Actions.",
     ],
     tools: [
       "FastAPI",
@@ -214,11 +235,17 @@ export const FLAGSHIP_PROJECTS: FlagshipProject[] = [
     categories: ["Agents & Harnesses"],
     stack: ["Python 3.11", "FastAPI", "Pydantic", "Next.js 14", "Docker"],
     problem:
-      "Long-running coding agents lose state or leave partial broken edits behind when a worker dies mid-execution.",
+      "Long-running coding agents lose their progress or leave half-written edits behind if a worker exits unexpectedly mid-task.",
     architecture:
-      "Each run records checkpoints in an append-only SHA-256 execution ledger, fences stale workers using lease expiry, and evaluates patches inside an isolated shadow workspace before idempotent promotion.",
+      "Logs each step to an append-only SHA-256 ledger, lets a second worker take over once the dead worker's lease expires, and tests patches inside a shadow copy before updating the workspace.",
     verification:
-      "Live CLI `demo crash` survives forced SIGKILL mid-run and completes on a second worker with patch applied 1 time and 0 duplicate side effects.",
+      "CLI recovery demo simulates a mid-run worker exit; worker-2 resumes from checkpoint #6 and applies the patch once with 0 duplicate side effects.",
+    pipeline: [
+      { label: "Plan Spec", sublabel: "Structured task" },
+      { label: "Lease Lock", sublabel: "Fenced worker" },
+      { label: "Shadow Diff", sublabel: "Isolation gate", isGate: true },
+      { label: "SHA-256 Ledger", sublabel: "0 duplicates" },
+    ],
     codePaths: ["backend/haseen/", "PYTHONPATH=backend python -m haseen.cli demo crash"],
     traceTitle: "CLI Crash-Recovery Trace (Verified Live)",
     traceOutput: `$ PYTHONPATH=backend python -m haseen.cli demo crash
@@ -239,11 +266,17 @@ evidence: planner model calls 1 (the plan was kept, not redone); duplicate side 
     categories: ["Agents & Harnesses"],
     stack: ["Python 3.11", "Playwright", "FastAPI", "Pydantic", "PyYAML", "Next.js 14"],
     problem:
-      "Driving every browser step through a Vision LLM is slow, expensive, and fragile whenever layout coordinates shift.",
+      "Sending screenshots to a Vision LLM for every click is slow, burns tokens, and breaks whenever UI coordinates shift.",
     architecture:
-      "Compiles a single workflow discovery into versioned YAML capability graphs anchored on accessible ARIA roles and names, complete with pre/post DOM guards and OTP handoff hooks for deterministic replay.",
+      "After one VLM exploration pass, the compiler saves a YAML workflow around ARIA roles and element names, with pre/post DOM checks and OTP handoff hooks so future runs replay without the model.",
     verification:
       "Deterministic capability replay completes with model_calls: 0 in 813ms locally on Windows (716ms repo baseline).",
+    pipeline: [
+      { label: "VLM Scan", sublabel: "One-time explore" },
+      { label: "YAML Compile", sublabel: "ARIA selectors" },
+      { label: "DOM Guard", sublabel: "State check", isGate: true },
+      { label: "Replay Run", sublabel: "0 LLM calls" },
+    ],
     codePaths: [
       "src/computer_use/compiler.py",
       "python -m mutahakkim.cli replay --capability lookup_savings_balance",
@@ -271,11 +304,17 @@ evidence: planner model calls 1 (the plan was kept, not redone); duplicate side 
     categories: ["RAG & Search", "Data & Apps"],
     stack: ["Python", "FastAPI", "Qdrant", "PostgreSQL / SQLAlchemy", "Google Gemini", "Docker"],
     problem:
-      "Shared vector indexes risk cross-tenant leakage, and uncited PDF answers break institutional auditability.",
+      "Putting everyone's documents in one vector index risks cross-account leaks, and answers without page numbers are hard to trust or audit.",
     architecture:
-      "Splits documents into 1,000-character chunks with 200-character overlap, isolates every user account inside its own Qdrant collection, protects endpoints with JWT and Bcrypt, and links outputs back to source page numbers.",
+      "Splits PDFs into 1,000-character chunks with 200-character overlap, stores each user's chunks in a separate Qdrant collection behind JWT and Bcrypt auth, and attaches exact source page numbers to every answer.",
     verification:
       "17 / 17 pytest unit and integration tests passing (5.00s) in GitHub Actions (Hybrid RAG & Security Test Suite).",
+    pipeline: [
+      { label: "PDF Split", sublabel: "1k / 200 overlap" },
+      { label: "Qdrant Slice", sublabel: "Tenant isolated" },
+      { label: "JWT + Auth", sublabel: "Access gate", isGate: true },
+      { label: "Cited Output", sublabel: "Page numbers" },
+    ],
     codePaths: ["rag/chunker.py", "rag/vectorstore.py", "rag/citations.py", "auth/security.py"],
   },
   {
@@ -288,17 +327,23 @@ evidence: planner model calls 1 (the plan was kept, not redone); duplicate side 
     categories: ["Agents & Harnesses", "RAG & Search"],
     stack: ["Python 3.11", "LangGraph", "FastAPI", "Google Gemini", "Tavily API", "SSE", "Docker"],
     problem:
-      "Single-pass web research agents frequently publish shallow summaries with unresolved evidence gaps.",
+      "Single-pass search agents often stop too early and return thin summaries with missing sources.",
     architecture:
-      "Wires a cyclic LangGraph StateGraph (planner -> searcher -> writer -> critic, bounded by MAX_REVISIONS=3) for bilingual Arabic/English query planning, parallel retrieval, critic-gated refinement, and SSE streaming.",
+      "Uses a LangGraph StateGraph (planner -> searcher -> writer -> critic, capped at MAX_REVISIONS=3) to plan Arabic and English queries, search in parallel, review drafts before approval, and stream results over SSE.",
     verification:
       "12 / 12 pytest workflow, agent, and API tests passing (1.58s) in GitHub Actions (Multi-Agent DeepResearch Tests).",
+    pipeline: [
+      { label: "Planner", sublabel: "AR/EN queries" },
+      { label: "Searcher", sublabel: "Parallel fetch" },
+      { label: "Critic Gate", sublabel: "MAX_REVISIONS=3", isGate: true },
+      { label: "SSE Brief", sublabel: "Live stream" },
+    ],
     codePaths: ["graph/workflow.py"],
   },
   {
     id: "docushield-ai",
     name: "DocuShield-AI",
-    subtitle: "Local Fine-Tuned Document & PII Intelligence",
+    subtitle: "Local Document Layout & PII Redaction Models",
     repoUrl: "https://github.com/alhaj-ai/DocuShield-AI",
     releaseTag: "v0.1.0",
     ciLabel: "9 / 9 pytest (1.99s)",
@@ -313,11 +358,17 @@ evidence: planner model calls 1 (the plan was kept, not redone); duplicate side 
       "Streamlit",
     ],
     problem:
-      "Sensitive medical and institutional records cannot safely leave local infrastructure for external cloud processing.",
+      "Medical and legal records cannot safely be uploaded to third-party cloud APIs just for extraction or redaction.",
     architecture:
-      "Trains and runs local Transformer models with Hugging Face Trainer: LayoutLMv3 for structured field extraction and XLM-RoBERTa evaluated via seqeval for cross-lingual entity recognition, paired with deterministic Arabic PII redaction rules.",
+      "Trains LayoutLMv3 locally for document field extraction and XLM-RoBERTa for cross-lingual entity recognition (checked with seqeval), paired with rule-based Arabic PII redaction that keeps all data local.",
     verification:
       "LayoutLMv3 achieved 0.9856 eval F1 (0.9871 accuracy); joint XLM-RoBERTa lifted cross-lingual NER from 0.1292 to 0.5606 eval F1; 9 / 9 pytest passing (1.99s) in CI.",
+    pipeline: [
+      { label: "Local Scan", sublabel: "Zero cloud upload" },
+      { label: "LayoutLMv3", sublabel: "0.9856 eval F1" },
+      { label: "PII + SeqEval", sublabel: "Redaction gate", isGate: true },
+      { label: "XLM-R Joint", sublabel: "0.5606 NER F1" },
+    ],
     codePaths: [
       "src/problem1_document_understanding/train_layout_model.py",
       "src/problem2_ner_classification/train_ner.py",
@@ -340,11 +391,17 @@ XLM-RoBERTa Cross-Lingual NER (seqeval):
     categories: ["Fine-Tuning & Vision", "Data & Apps"],
     stack: ["Python", "YOLOv8-Seg", "FastAPI", "Edge TTS", "Next.js 14", "Docker"],
     problem:
-      "Interactive vision education systems often silently fall back to fake default labels or block on sequential cloud audio requests.",
+      "Camera learning apps often stall waiting on cloud speech calls or show fake fallback labels when nothing recognizable is in the frame.",
     architecture:
-      "Pairs YOLOv8 instance segmentation across 82 mapped Arabic classes with RTL Pillow overlays (NotoNaskhArabic-Regular.ttf), concurrent Edge TTS + HTTP fallback speech synthesis, explicit unrecognized empty states, and Next.js 14 UI.",
+      "Runs YOLOv8 segmentation over 82 Arabic object classes, draws RTL Pillow overlays (NotoNaskhArabic-Regular.ttf), speaks labels with concurrent Edge TTS and HTTP fallback, and shows an explicit empty state when nothing matches.",
     verification:
       "7 / 7 pytest API & phonics tests passing (0.91s), verified live segmentation with best.pt, Next.js TypeScript check & production build green in CI, and v1.0.0 model weights released.",
+    pipeline: [
+      { label: "Frame Capture", sublabel: "Camera feed" },
+      { label: "YOLOv8-Seg", sublabel: "82 Arabic classes" },
+      { label: "Empty Guard", sublabel: "No fake labels", isGate: true },
+      { label: "Edge TTS", sublabel: "RTL overlay" },
+    ],
     codePaths: ["backend/main.py", "backend/tests/test_api.py", "frontend/src/app/page.tsx"],
   },
 ];
@@ -355,7 +412,7 @@ export const DOMAIN_PROJECTS: DomainProject[] = [
     name: "data-migration-pipeline",
     repoUrl: "https://github.com/alhaj-ai/data-migration-pipeline",
     scope:
-      "Hybrid CSV-to-MongoDB ETL router (src/file_router.py) choosing Python streaming vs distributed PySpark, normalizing Eastern Arabic numerals, and quarantining invalid rows across 9 quality rules.",
+      "Routes CSV-to-MongoDB imports in src/file_router.py between Python streaming and PySpark, normalizes Eastern Arabic numerals, and quarantines rows that fail 9 validation rules.",
     verification: "15 / 15 pytest (0.02s) · CI Passing",
     categories: ["Data & Apps"],
     stack: ["Python", "PySpark", "MongoDB", "Pytest"],
@@ -365,7 +422,7 @@ export const DOMAIN_PROJECTS: DomainProject[] = [
     name: "TaskFlow",
     repoUrl: "https://github.com/alhaj-ai/taskflow",
     scope:
-      "Offline-first Flutter mobile client (SQLite sqflite) paired with a FastAPI + PostgreSQL (8 tables) backend supporting Gemini task breakdown and local fallback.",
+      "Offline-first Flutter app backed by local SQLite (sqflite) syncing with an 8-table FastAPI and PostgreSQL API, with Gemini task breakdown and local fallback.",
     verification: "Backend & Flutter Analyze CI · v1.0.0 APK",
     categories: ["Data & Apps"],
     stack: ["Flutter", "SQLite", "FastAPI", "PostgreSQL", "Gemini"],
@@ -375,7 +432,7 @@ export const DOMAIN_PROJECTS: DomainProject[] = [
     name: "Majles-AI",
     repoUrl: "https://github.com/alhaj-ai/Majles-AI",
     scope:
-      "Local-first Arabic meeting assistant combining WhisperX speaker diarization, FAISS + CrossEncoder retrieval, and Ollama Qwen2.5 Q&A behind FastAPI and Next.js 14.",
+      "Local-first Arabic meeting assistant pairing WhisperX speaker diarization with FAISS + CrossEncoder search and Ollama Qwen2.5 Q&A behind FastAPI and Next.js 14.",
     verification: "4 / 4 pytest (0.99s) · CI Passing",
     categories: ["RAG & Search", "Data & Apps"],
     stack: ["WhisperX", "FAISS", "CrossEncoder", "Ollama", "Next.js 14"],
@@ -385,7 +442,7 @@ export const DOMAIN_PROJECTS: DomainProject[] = [
     name: "Mohawir-AI",
     repoUrl: "https://github.com/alhaj-ai/Mohawir-AI",
     scope:
-      "Technical interview simulator orchestrating 5 LangGraph StateGraph agents, FAISS knowledge retrieval, isolated code execution evaluation, and a Next.js 14 frontend.",
+      "Technical interview simulator coordinating 5 LangGraph StateGraph agents, FAISS question lookup, sandboxed code evaluation, and a Next.js 14 frontend.",
     verification: "4 / 4 pytest (0.59s) · CI Passing",
     categories: ["Agents & Harnesses", "RAG & Search"],
     stack: ["LangGraph", "FAISS", "FastAPI", "Next.js 14"],
@@ -395,7 +452,7 @@ export const DOMAIN_PROJECTS: DomainProject[] = [
     name: "Azal-AI",
     repoUrl: "https://github.com/alhaj-ai/Azal-AI",
     scope:
-      "Multi-agent e-commerce operations platform with supervisor routing, supplier PDF invoice compliance auditing, and React 19 UI supporting LM Studio local models and cloud LLMs.",
+      "Multi-agent e-commerce ops tool with supervisor routing, supplier PDF invoice compliance checks, and a React 19 UI supporting LM Studio local models and cloud LLMs.",
     verification: "2 / 2 pytest (0.06s) · CI Passing",
     categories: ["Agents & Harnesses", "Data & Apps"],
     stack: ["LangGraph", "LM Studio", "React 19", "FastAPI"],
@@ -405,7 +462,7 @@ export const DOMAIN_PROJECTS: DomainProject[] = [
     name: "voice-agent-Pharmacy-Assistant",
     repoUrl: "https://github.com/alhaj-ai/voice-agent-Pharmacy-Assistant",
     scope:
-      "Real-time bidirectional Twilio Media Streams and Deepgram Voice Agent WebSocket bridge implementing live barge-in interruption handling.",
+      "Two-way Twilio Media Streams and Deepgram Voice Agent WebSocket bridge that handles caller barge-in interruptions live.",
     verification: "Function & WebSocket Bridge CI Passing",
     categories: ["Agents & Harnesses", "Data & Apps"],
     stack: ["Twilio Media Streams", "Deepgram", "WebSockets", "Python"],
@@ -415,7 +472,7 @@ export const DOMAIN_PROJECTS: DomainProject[] = [
     name: "ai-multi-search-agent",
     repoUrl: "https://github.com/alhaj-ai/ai-multi-search-agent",
     scope:
-      "9-node parallel LangGraph retrieval pipeline aggregating and synthesizing search signals across Google, Bing, and Reddit via Streamlit.",
+      "9-node parallel LangGraph workflow that collects search signals from Google, Bing, and Reddit and summarizes them in Streamlit.",
     verification: "Graph Topology CI Passing",
     categories: ["Agents & Harnesses", "RAG & Search"],
     stack: ["LangGraph", "Streamlit", "Python"],
@@ -425,7 +482,7 @@ export const DOMAIN_PROJECTS: DomainProject[] = [
     name: "mindRouter-agent",
     repoUrl: "https://github.com/alhaj-ai/mindRouter-agent",
     scope:
-      "Stateful LangGraph conditional intent router maintaining conversation context across specialized assistant personas.",
+      "Stateful LangGraph intent router that keeps conversation history while switching between specialized assistant roles.",
     verification: "Routing Logic CI Passing",
     categories: ["Agents & Harnesses"],
     stack: ["LangGraph", "LangChain", "Python"],
@@ -442,7 +499,7 @@ export const CREDENTIALS: CredentialItem[] = [
     verifyUrl: null,
     imageSrc: "/badges/deepmind-train-slm.png",
     highlights:
-      "Focuses on preparing training data, model adaptation, and training small language models efficiently.",
+      "Covers dataset preparation, fine-tuning, and training workflows for small language models.",
   },
   {
     id: "deepmind-build-slm",
@@ -453,7 +510,7 @@ export const CREDENTIALS: CredentialItem[] = [
     verifyUrl: null,
     imageSrc: "/badges/deepmind-build-slm.png",
     highlights:
-      "Covers core Transformer language model architecture, tokenization, training loop mechanics, and inference.",
+      "Covers core Transformer architecture, tokenization, training loops, and local inference.",
   },
   {
     id: "ibm-rag",
@@ -463,7 +520,7 @@ export const CREDENTIALS: CredentialItem[] = [
     issuedAt: "Nov 10, 2026",
     verifyUrl: "https://www.credly.com/go/UgVkZXK1",
     highlights:
-      "Applied RAG architectures pairing vector retrieval pipelines with grounded generation.",
+      "Applied RAG patterns pairing vector retrieval with grounded answers.",
   },
   {
     id: "claude-code-action",
@@ -473,13 +530,21 @@ export const CREDENTIALS: CredentialItem[] = [
     issuedAt: "Nov 10, 2026",
     verifyUrl: "https://academy.claude.com/verify/05b91e59e106a6115c912602a55340d8",
     highlights:
-      "Practical agentic coding workflows, repository inspection, tool orchestration, and verification discipline.",
+      "Practical agentic coding workflows covering repo inspection, tool calls, and test checks.",
   },
 ];
 
 export const SKILL_GROUPS: SkillGroup[] = [
   {
+    id: "llms-finetuning",
     domain: "LLMs, Fine-Tuning & AI",
+    shortLabel: "LLMs & Tuning",
+    summary:
+      "Training domain-specific Transformers, wiring multi-agent loops, and keeping autonomous runs recoverable.",
+    linkedRepos: [
+      { name: "DocuShield-AI", href: "https://github.com/alhaj-ai/DocuShield-AI" },
+      { name: "Haseen-AI", href: "https://github.com/alhaj-ai/Haseen-AI" },
+    ],
     items: [
       "Large Language Models (LLMs)",
       "Model Fine-Tuning",
@@ -495,7 +560,15 @@ export const SKILL_GROUPS: SkillGroup[] = [
     ],
   },
   {
+    id: "frameworks-serving",
     domain: "AI Frameworks & Serving",
+    shortLabel: "Frameworks",
+    summary:
+      "Stateful LangGraph flows, PyTorch and Hugging Face Trainer runs, Pydantic validation, and local or API model serving.",
+    linkedRepos: [
+      { name: "Agentic-DeepResearch", href: "https://github.com/alhaj-ai/Agentic-DeepResearch" },
+      { name: "Mohawir-AI", href: "https://github.com/alhaj-ai/Mohawir-AI" },
+    ],
     items: [
       "PyTorch",
       "TensorFlow",
@@ -512,7 +585,18 @@ export const SKILL_GROUPS: SkillGroup[] = [
     ],
   },
   {
+    id: "vision-speech",
     domain: "Vision, OCR & Speech",
+    shortLabel: "Vision & Speech",
+    summary:
+      "YOLOv8 object segmentation, LayoutLMv3 form extraction, OCR, WhisperX speaker diarization, and live voice bridges.",
+    linkedRepos: [
+      { name: "Mustakshef-AI", href: "https://github.com/alhaj-ai/Mustakshef-AI" },
+      {
+        name: "voice-agent-Pharmacy-Assistant",
+        href: "https://github.com/alhaj-ai/voice-agent-Pharmacy-Assistant",
+      },
+    ],
     items: [
       "Ultralytics YOLOv8",
       "LayoutLMv3",
@@ -529,7 +613,15 @@ export const SKILL_GROUPS: SkillGroup[] = [
     ],
   },
   {
+    id: "data-retrieval",
     domain: "Data, Retrieval & Eval",
+    shortLabel: "RAG & Data",
+    summary:
+      "Account-isolated Qdrant and FAISS vector stores, CrossEncoder reranking, PySpark routing, and seqeval checks.",
+    linkedRepos: [
+      { name: "DocuMind-RAG", href: "https://github.com/alhaj-ai/DocuMind-RAG" },
+      { name: "data-migration-pipeline", href: "https://github.com/alhaj-ai/data-migration-pipeline" },
+    ],
     items: [
       "Qdrant",
       "FAISS",
@@ -544,7 +636,15 @@ export const SKILL_GROUPS: SkillGroup[] = [
     ],
   },
   {
+    id: "languages-dbs",
     domain: "Languages & Databases",
+    shortLabel: "Languages & DB",
+    summary:
+      "Typed Python and TypeScript backends paired with PostgreSQL, MongoDB, SQLAlchemy, and offline SQLite storage.",
+    linkedRepos: [
+      { name: "TaskFlow", href: "https://github.com/alhaj-ai/taskflow" },
+      { name: "DocuMind-RAG", href: "https://github.com/alhaj-ai/DocuMind-RAG" },
+    ],
     items: [
       "Python",
       "TypeScript",
@@ -558,7 +658,15 @@ export const SKILL_GROUPS: SkillGroup[] = [
     ],
   },
   {
+    id: "web-automation",
     domain: "Web, Mobile & Automation",
+    shortLabel: "Apps & Browser",
+    summary:
+      "ARIA-anchored Playwright replay graphs paired with FastAPI, Next.js 14, Flutter mobile clients, and SSE or WebSocket streams.",
+    linkedRepos: [
+      { name: "Mutahakkim-AI", href: "https://github.com/alhaj-ai/Mutahakkim-AI" },
+      { name: "Azal-AI", href: "https://github.com/alhaj-ai/Azal-AI" },
+    ],
     items: [
       "FastAPI",
       "Django REST Framework",
@@ -574,7 +682,118 @@ export const SKILL_GROUPS: SkillGroup[] = [
     ],
   },
   {
+    id: "devops-ci",
     domain: "DevOps, Testing & Tooling",
+    shortLabel: "DevOps & CI",
+    summary:
+      "Automated checks across 14 repositories using Docker containers, pytest suites, and GitHub Actions.",
+    linkedRepos: [
+      { name: "Haseen-AI", href: "https://github.com/alhaj-ai/Haseen-AI" },
+      { name: "Majles-AI", href: "https://github.com/alhaj-ai/Majles-AI" },
+    ],
     items: ["Docker", "Git", "GitHub", "GitHub Actions CI/CD", "Pytest", "Linux"],
   },
 ];
+
+export const MARQUEE_STACK = [
+  "PyTorch",
+  "Hugging Face Trainer",
+  "LayoutLMv3",
+  "XLM-RoBERTa",
+  "LangGraph",
+  "Playwright",
+  "FastAPI",
+  "Qdrant",
+  "FAISS",
+  "CrossEncoder",
+  "YOLOv8-Seg",
+  "PySpark",
+  "Next.js 14",
+  "TypeScript",
+  "PostgreSQL",
+  "Docker",
+  "GitHub Actions",
+] as const;
+
+export const CODE_SHOWCASE_TABS: CodeShowcaseTab[] = [
+  {
+    id: "haseen",
+    filename: "haseen_ledger.py",
+    repoName: "Haseen-AI",
+    repoUrl: "https://github.com/alhaj-ai/Haseen-AI",
+    language: "Python · Harness Runtime",
+    metricBadge: "SIGKILL Recovery · 0 duplicates",
+    codeLines: [
+      "# Append-only SHA-256 ledger + worker lease fencing",
+      "class ExecutionHarness:",
+      "    def recover_and_apply(self, run_id: str):",
+      "        checkpoint = self.ledger.latest(run_id)  # SHA-256 verified",
+      "        self.lease.assert_expired(checkpoint.worker_id)",
+      "        with ShadowWorkspace(checkpoint.patch) as sandbox:",
+      "            assert sandbox.verify_tests() == 'passed'",
+      "            return self.promote_idempotent(run_id, checkpoint)",
+    ],
+    traceLines: [
+      "$ PYTHONPATH=backend python -m haseen.cli demo crash",
+      "worker-1 (pid 8404) killed; last checkpoint #6 ('analysis')",
+      "worker-2: lease expired 2.2s after kill; run recovered",
+      "result: completed/applied/passed | duplicate side effects: 0",
+    ],
+  },
+  {
+    id: "mutahakkim",
+    filename: "mutahakkim_replay.py",
+    repoName: "Mutahakkim-AI",
+    repoUrl: "https://github.com/alhaj-ai/Mutahakkim-AI",
+    language: "Python · Playwright Graph",
+    metricBadge: "0 model_calls · 813ms",
+    codeLines: [
+      "# Compile one VLM exploration into deterministic ARIA YAML",
+      "def replay_capability(graph_path: str, inputs: dict):",
+      "    graph = CapabilityCompiler.load_yaml(graph_path)",
+      "    for step in graph.aria_steps:",
+      "        assert step.pre_dom_guard.matches(page)",
+      "        page.get_by_role(step.role, name=step.name).execute(inputs)",
+      "        assert step.post_dom_guard.matches(page)",
+      "    return {'model_calls': 0, 'status': 'deterministic_ok'}",
+    ],
+    traceLines: [
+      "$ python -m mutahakkim.cli replay --capability lookup_savings_balance",
+      '{"kind": "success", "run_id": "14a1c83e1da1", "model_calls": 0}',
+      '{"duration_ms": 813, "savings_balance": "$12040.00"}',
+    ],
+  },
+  {
+    id: "docushield",
+    filename: "docushield_eval.py",
+    repoName: "DocuShield-AI",
+    repoUrl: "https://github.com/alhaj-ai/DocuShield-AI",
+    language: "PyTorch · HF Trainer",
+    metricBadge: "0.9856 Eval F1 · Local PII",
+    codeLines: [
+      "# Local Transformer layout understanding + Arabic PII gate",
+      "trainer = Trainer(",
+      "    model=layoutlmv3_for_token_classification,",
+      "    compute_metrics=seqeval_token_f1_metrics,",
+      ")",
+      "metrics = trainer.evaluate(held_out_split)",
+      "# Cross-lingual XLM-R NER joint lift: 0.1292 -> 0.5606 F1",
+      "redacted = apply_deterministic_arabic_pii_rules(metrics.predictions)",
+    ],
+    traceLines: [
+      "LayoutLMv3 (models/problem1_layoutlmv3/eval_metrics.json):",
+      "eval_f1: 0.9856 | eval_accuracy: 0.9871 (15 epochs)",
+      "XLM-RoBERTa NER: 0.1292 (en_only) -> 0.5606 (joint fine-tuned)",
+      "CI: 9 / 9 pytest passing (1.99s)",
+    ],
+  },
+];
+
+export const COMPANION_QUICK_PROMPTS = [
+  "Why hire Mohammed?",
+  "Show Agent Harness proof",
+  "Fine-Tuning & F1 metrics",
+  "Verified Certifications",
+  "Tech Stack summary",
+  "Contact & availability",
+] as const;

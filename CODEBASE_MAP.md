@@ -5,11 +5,11 @@
 ## 1. System Overview
 - **Framework**: Next.js 14 App Router (`output: 'export'`, `images.unoptimized: true`)
 - **Language / Runtime**: TypeScript 5.6 / React 18 / Node.js 24
-- **Styling & Identity**: True Pitch-Black Obsidian dark mode (`--canvas: 3 3 5`) + Light toggle (`--canvas: 250 250 252`), Tailwind CSS, Framer Motion, Three.js WebGL
+- **Styling & Identity**: Ruled Engineering Notebook theme (`#f4eddd` cream ruled paper, `#29384a` charcoal ink, `#b84f45` terracotta red ink, `#e8bd5e` mustard pill CTAs, `#d9b65e` bold footer) + optional Dark Ink toggle (`.dark`), Tailwind CSS, Three.js WebGL, Canvas 2D Physics Constellation
 
 ## 2. Entry Points & Bootstrap
-- Root layout: `app/layout.tsx` (`Inter` & `JetBrains_Mono`, metadata, skip-to-content)
-- Home route: `app/page.tsx`
+- Root layout: `app/layout.tsx` (`Caveat` handwritten display, `Inter`, `JetBrains_Mono`, `Instrument_Serif`, metadata, skip-to-content)
+- Home route: `app/page.tsx` (`NotebookNav`, `NotebookHero`, `NotebookToolkitAndWork`, `NotebookDemosAndJourney`, `NotebookAboutAndContact`)
 - UI States: `app/loading.tsx`, `app/error.tsx`, `app/not-found.tsx`
 - Deployment: `.github/workflows/deploy.yml` (publishes `./out` to GitHub Pages)
 
@@ -22,21 +22,20 @@
 ## 4. Data Models & Schemas
 | Model Name | File Path | Description |
 |---|---|---|
-| `PROFILE`, `VERIFIED_METRICS`, `ARCHITECTURE_STAGES`, `FLAGSHIP_PROJECTS`, `DOMAIN_PROJECTS`, `CREDENTIALS`, `SKILL_GROUPS` | `lib/portfolio-data.ts` | Verified portfolio copy, repository stats, credentials, and skill taxonomy |
+| `PROFILE`, `VERIFIED_METRICS`, `ARCHITECTURE_STAGES`, `FLAGSHIP_PROJECTS`, `DOMAIN_PROJECTS`, `CREDENTIALS`, `SKILL_GROUPS`, `CODE_SHOWCASE_TABS`, `MARQUEE_STACK`, `COMPANION_QUICK_PROMPTS` | `lib/portfolio-data.ts` | Verified portfolio copy, repository stats, pipeline nodes, code snippets, credentials, and skill taxonomy |
+| `filterFlagshipProjects`, `filterDomainProjects`, `answerPortfolioQuery` | `lib/portfolio-helpers.ts` | Shared category/query filter logic and zero-hallucination deterministic AI Companion query matcher |
+| Unit tests | `lib/__tests__/portfolio-helpers.test.ts` | Node built-in test suite covering project filtering and AI Companion prompt/fallback handling |
 
 ## 5. Reusable Components & Shared Utilities
 | Name | Path | Purpose |
 |---|---|---|
-| `NeuralBackdrop` | `components/NeuralBackdrop.tsx` | Fixed canvas 2D constellation particle network on obsidian black backdrop |
-| `NeuralHarness3D` | `components/NeuralHarness3D.tsx` | Interactive Three.js WebGL obsidian LLM core + 3 rotating harness orbital rings + pointer drag/camera presets + WebGL fallback |
-| `TiltCard3D` | `components/TiltCard3D.tsx` | Physics-lerped 3D perspective card wrapper with cursor-angle tracking conic border glow |
-| `MotionReveal` | `components/MotionReveal.tsx` | Reduced-motion-aware Framer Motion entrance wrapper |
-| `Navbar` | `components/Navbar.tsx` | Frosted obsidian sticky header, mobile drawer, dark/light theme switcher |
-| `HeroSection` | `components/HeroSection.tsx` | Identity headline, typewriter loop, dynamic 3D hero core, verified metric strip |
-| `AboutAndArchitecture` | `components/AboutAndArchitecture.tsx` | Narrative + glowing vertical-track interactive 4-layer workflow explorer |
-| `ProjectsShowcase` | `components/ProjectsShowcase.tsx` | Filterable Flagship 6 + Domain 8 grid with expandable traces & empty-state reset |
-| `CredentialsAndSkills` | `components/CredentialsAndSkills.tsx` | Verified DeepMind/IBM/Anthropic cards + full technical stack grid |
-| `FooterSection` | `components/FooterSection.tsx` | Contact CTA with clipboard email copy + social links |
+| `InteractiveParticleNetwork` | `components/InteractiveParticleNetwork.tsx` | Mouse-reactive physics particle constellation synced to notebook ink / dark theme palette |
+| `NeuralHarness3D` | `components/NeuralHarness3D.tsx` | Interactive Three.js WebGL architecture stage (LLM + Harness core, Hybrid RAG vector cube & query rays, Multi-Agent loop) |
+| `NotebookNav` | `components/NotebookNav.tsx` | Sticky frosted paper navbar, 2-column ruled mobile drawer, optional dark ink toggle |
+| `NotebookHero` | `components/NotebookHero.tsx` | Ruled paper hero with `Caveat` display heading, mustard pill CTA, cycling `ExpertisePulse` note, and 4-column Signal Strip |
+| `NotebookToolkitAndWork` | `components/NotebookToolkitAndWork.tsx` | Animated `0% -> N%` skill matrix bars, 7-domain expandable stack, filterable Flagship 6 tilted cards + 8 Domain repos |
+| `NotebookDemosAndJourney` | `components/NotebookDemosAndJourney.tsx` | 6-tab Systems in Motion browser stage + 3D-tilted Architecture Pipeline Journey + DeepMind/IBM/Anthropic Credentials |
+| `NotebookAboutAndContact` | `components/NotebookAboutAndContact.tsx` | Engineering dossier, About narrative, notebook contact form, and bold Mustard Gold Footer |
 
 ## 6. Dependency Graph & Hot Spots
 - Static assets: `public/.nojekyll`, `public/robots.txt`, `public/sitemap.xml`, `public/badges/deepmind-train-slm.png`, `public/badges/deepmind-build-slm.png`
