@@ -2,8 +2,18 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
-import { ArrowUpRight, Award, BadgeCheck, ExternalLink, Terminal } from "lucide-react";
-import { CREDENTIALS, FLAGSHIP_PROJECTS } from "@/lib/portfolio-data";
+import {
+  ArrowUpRight,
+  Award,
+  BadgeCheck,
+  BookOpen,
+  ExternalLink,
+  GraduationCap,
+  HeartHandshake,
+  Languages,
+  Terminal,
+} from "lucide-react";
+import { CREDENTIALS, FLAGSHIP_PROJECTS, JOURNEY_TIMELINE, PROFILE } from "@/lib/portfolio-data";
 
 const NeuralHarness3D = dynamic(
   () => import("@/components/NeuralHarness3D").then((mod) => mod.NeuralHarness3D),
@@ -456,6 +466,98 @@ export function NotebookDemosAndJourney() {
           </div>
         </section>
       </div>
+
+      {/* 06 // Education, Community & Trajectory */}
+      <section
+        id="journey"
+        aria-label="Education, community and engineering trajectory"
+        className="border-b-2 border-[var(--ink)] bg-[rgba(247,241,226,0.4)] px-5 py-20 dark:bg-transparent sm:px-10 md:px-[6.5vw]"
+      >
+        <div className="mx-auto max-w-[1340px]">
+          <div className="grid items-end gap-8 lg:grid-cols-[0.85fr_1.15fr_1fr]">
+            <div>
+              <p className="nb-eyebrow">
+                <span className="nb-num">06</span>
+                <span>Education &amp; Community</span>
+              </p>
+            </div>
+            <h2 className="font-hand text-5xl font-bold leading-[0.86] tracking-tight text-[var(--ink)] sm:text-6xl">
+              Still learning.
+              <br />
+              Still <span className="text-[var(--red-ink)]">sharing.</span>
+            </h2>
+            <p className="font-hand text-xl leading-[1.42] text-[var(--ink-soft)]">
+              Academic foundations in artificial intelligence complemented by practical mentoring and open-source implementation.
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
+            {JOURNEY_TIMELINE.map((item, idx) => {
+              const Icon =
+                item.category === "EDUCATION"
+                  ? GraduationCap
+                  : item.category === "COMMUNITY"
+                  ? HeartHandshake
+                  : BookOpen;
+              return (
+                <div
+                  key={item.id}
+                  className={`nb-card flex flex-col justify-between p-6 ${
+                    idx % 2 === 0 ? "nb-card-tilt-left" : "nb-card-tilt-right"
+                  }`}
+                >
+                  <div>
+                    <div className="flex items-center justify-between font-mono text-[10px] font-bold">
+                      <span className="text-[var(--red-ink)]">{item.category}</span>
+                      <span className="text-[var(--muted)]">{item.period}</span>
+                    </div>
+
+                    <div className="mt-3 flex items-center gap-2">
+                      <Icon className="h-5 w-5 text-[var(--red-ink)]" aria-hidden="true" />
+                      <h3 className="font-hand text-2xl font-bold leading-tight text-[var(--ink)]">
+                        {item.role}
+                      </h3>
+                    </div>
+
+                    <p className="mt-1 font-mono text-xs font-bold text-[var(--blue-ink)]">
+                      {item.institution}
+                    </p>
+
+                    <p className="mt-3 font-sans text-xs leading-relaxed text-[var(--muted)]">
+                      {item.summary}
+                    </p>
+                  </div>
+
+                  <ul className="mt-5 space-y-1.5 border-t border-dashed border-[var(--border-ink)] pt-4 font-mono text-[11px] text-[var(--ink-soft)]">
+                    {item.highlights.map((point) => (
+                      <li key={point} className="flex items-start gap-2">
+                        <span className="text-[var(--red-ink)]">›</span>
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Languages Bar */}
+          <div className="mt-8 flex flex-wrap items-center justify-between gap-4 rounded-md border-2 border-[var(--ink)] bg-[var(--paper-card)] px-5 py-3.5 shadow-[4px_5px_0_rgba(41,56,74,0.12)]">
+            <div className="flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-widest text-[var(--ink)]">
+              <Languages className="h-4 w-4 text-[var(--red-ink)]" aria-hidden="true" />
+              <span>Languages</span>
+            </div>
+            <div className="flex flex-wrap items-center gap-6 font-mono text-xs">
+              {PROFILE.languages.map((lang) => (
+                <div key={lang.language} className="flex items-center gap-2">
+                  <span className="font-bold text-[var(--ink)]">{lang.language}</span>
+                  <span className="nb-chip text-[10px]">{lang.level}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   );
 }

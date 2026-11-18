@@ -1,9 +1,11 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ArrowUpRight, ChevronDown, ChevronUp, FolderGit2, Layers, RotateCcw, Search } from "lucide-react";
 import {
+  CORE_TOOLKIT_DOMAINS,
   DOMAIN_PROJECTS,
+  ENGINEERING_PRINCIPLES,
   FLAGSHIP_PROJECTS,
   PROFILE,
   PROJECT_CATEGORIES,
@@ -11,19 +13,6 @@ import {
   type ProjectCategory,
 } from "@/lib/portfolio-data";
 import { filterDomainProjects, filterFlagshipProjects } from "@/lib/portfolio-helpers";
-
-const SKILL_BARS = [
-  ["Python & Async APIs", 94],
-  ["LLMs & Agent Workflows", 92],
-  ["PyTorch & Fine-Tuning", 89],
-  ["Hybrid RAG & Reranking", 90],
-  ["FastAPI & REST Services", 88],
-  ["Next.js & TypeScript", 86],
-  ["Computer Vision & OCR", 84],
-  ["Testing & Evaluation", 92],
-  ["PostgreSQL & SQLite", 85],
-  ["Docker & GitHub Actions", 86],
-] as const;
 
 const CARD_ACCENTS = [
   "rgba(184, 79, 69, 0.16)",
@@ -35,28 +24,10 @@ const CARD_ACCENTS = [
 ];
 
 export function NotebookToolkitAndWork() {
-  const barRef = useRef<HTMLDivElement | null>(null);
-  const [barsVisible, setBarsVisible] = useState(false);
   const [showDomainMatrix, setShowDomainMatrix] = useState(false);
-
   const [selectedCategory, setSelectedCategory] = useState<ProjectCategory>("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [openTraceId, setOpenTraceId] = useState<string | null>("haseen-ai");
-
-  useEffect(() => {
-    const node = barRef.current;
-    if (!node) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setBarsVisible(true);
-        }
-      },
-      { threshold: 0.2 }
-    );
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, []);
 
   const filteredFlagship = useMemo(
     () => filterFlagshipProjects(FLAGSHIP_PROJECTS, selectedCategory, searchQuery),
@@ -77,65 +48,90 @@ export function NotebookToolkitAndWork() {
 
   return (
     <>
-      {/* 02 // Engineering Toolkit & Animated Skill Bars */}
+      {/* 02 // Engineering Toolkit & Working Range */}
       <section
         id="skills"
         className="border-b-2 border-[var(--ink)] bg-[rgba(247,241,226,0.48)] px-5 py-20 dark:bg-transparent sm:px-10 md:px-[6.5vw]"
       >
-        <div className="mx-auto grid max-w-[1340px] gap-12 lg:grid-cols-[0.75fr_1.25fr] lg:gap-16">
+        <div className="mx-auto grid max-w-[1340px] gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
           <div>
             <p className="nb-eyebrow">
               <span className="nb-num">02</span>
-              <span>Engineering Toolkit</span>
+              <span>Technical Range</span>
             </p>
             <h2 className="mt-4 font-hand text-5xl font-bold leading-[0.84] tracking-tight text-[var(--ink)] sm:text-6xl lg:text-7xl">
-              Code, models,
+              Depth where
               <br />
-              and <span className="text-[var(--red-ink)]">harnesses.</span>
+              it <span className="text-[var(--red-ink)]">matters.</span>
             </h2>
             <p className="mt-5 max-w-md font-hand text-xl leading-[1.45] text-[var(--ink-soft)]">
-              Every tool here comes from shipped repositories covering local model training, crash-safe agent loops, Qdrant retrieval, and FastAPI services.
+              A working toolkit organized around shipped systems: grounded retrieval, deterministic agent loops, local model fine-tuning, and production APIs.
             </p>
+
+            {/* 3 Core Engineering Principles (inspired by Manus & Senior Systems) */}
+            <div className="mt-8 space-y-4 border-t border-dashed border-[var(--border-ink)] pt-6">
+              {ENGINEERING_PRINCIPLES.map((principle) => (
+                <div key={principle.letter} className="flex items-start gap-3.5">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[var(--ink)] bg-[var(--mustard)] font-mono text-xs font-bold text-[#26374a] dark:text-[#071006]">
+                    {principle.letter}
+                  </span>
+                  <div>
+                    <h3 className="font-hand text-xl font-bold text-[var(--ink)]">
+                      {principle.title}
+                    </h3>
+                    <p className="font-sans text-xs leading-relaxed text-[var(--muted)]">
+                      {principle.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
 
             <button
               type="button"
               onClick={() => setShowDomainMatrix((prev) => !prev)}
               aria-expanded={showDomainMatrix}
-              className="mt-6 inline-flex items-center gap-2 rounded-md border-2 border-[var(--ink)] bg-[var(--paper-card)] px-4 py-2 font-mono text-xs font-bold text-[var(--ink)] shadow-[3px_4px_0_rgba(41,56,74,0.14)] transition-transform hover:-translate-y-0.5"
+              className="mt-8 inline-flex items-center gap-2 rounded-md border-2 border-[var(--ink)] bg-[var(--paper-card)] px-4 py-2 font-mono text-xs font-bold text-[var(--ink)] shadow-[3px_4px_0_rgba(41,56,74,0.14)] transition-transform hover:-translate-y-0.5"
             >
               <Layers className="h-3.5 w-3.5 text-[var(--red-ink)]" aria-hidden="true" />
-              {showDomainMatrix ? "Hide 7-Domain Stack" : "Inspect All 7 Tool Domains"}
+              {showDomainMatrix ? "Hide Detailed 7-Domain Breakdown" : "Inspect All 7 Tool Domains"}
             </button>
           </div>
 
-          <div ref={barRef} className="self-center border-t border-[var(--border-ink)]">
-            {SKILL_BARS.map(([label, pct], idx) => (
+          {/* 4 Pillars 2x2 Grid */}
+          <div className="grid gap-5 sm:grid-cols-2">
+            {CORE_TOOLKIT_DOMAINS.map((domain, idx) => (
               <div
-                key={label}
-                className="grid min-h-[54px] grid-cols-[150px_1fr_44px] items-center gap-4 border-b border-[var(--border-ink)] py-2 font-mono text-xs sm:grid-cols-[190px_1fr_48px]"
+                key={domain.id}
+                className={`nb-card flex flex-col justify-between p-5 ${
+                  idx % 2 === 0 ? "nb-card-tilt-left" : "nb-card-tilt-right"
+                }`}
               >
-                <span className="font-hand text-base font-bold text-[var(--ink-soft)]">
-                  {label}
-                </span>
-                <div className="h-2 overflow-hidden rounded-full bg-[rgba(41,56,74,0.13)] dark:bg-white/10">
-                  <div
-                    style={{
-                      width: barsVisible ? `${pct}%` : "0%",
-                      transitionDelay: `${idx * 45}ms`,
-                    }}
-                    className="h-full bg-gradient-to-r from-[var(--blue-ink)] to-[var(--red-ink)] transition-all duration-1000 ease-out"
-                  />
+                <div>
+                  <div className="flex items-center justify-between font-mono text-[10px] font-bold text-[var(--red-ink)]">
+                    <span>DOMAIN {domain.number}</span>
+                    <span className="text-[var(--muted)]">{domain.skills.length} TOOLS</span>
+                  </div>
+                  <h3 className="mt-2 font-hand text-2xl font-bold leading-tight text-[var(--ink)]">
+                    {domain.title}
+                  </h3>
+                  <p className="mt-1 font-sans text-xs text-[var(--muted)]">{domain.focus}</p>
                 </div>
-                <b className="text-right font-mono text-xs font-bold text-[var(--red-ink)]">
-                  {pct}%
-                </b>
+
+                <div className="mt-4 flex flex-wrap gap-1.5 pt-2">
+                  {domain.skills.map((skill) => (
+                    <span key={skill} className="nb-chip text-xs">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
         </div>
 
         {showDomainMatrix && (
-          <div className="mx-auto mt-10 grid max-w-[1340px] gap-5 md:grid-cols-2 lg:grid-cols-3">
+          <div className="mx-auto mt-12 grid max-w-[1340px] gap-5 md:grid-cols-2 lg:grid-cols-3">
             {SKILL_GROUPS.map((group, idx) => (
               <div
                 key={group.domain}
@@ -288,6 +284,22 @@ export function NotebookToolkitAndWork() {
                         <p className="relative z-10 mt-4 font-hand text-xl leading-[1.38] text-[#526171] dark:text-[#aeb6ab]">
                           {project.architecture}
                         </p>
+
+                        {/* Concrete Proof Metrics (Manus & Minhajul inspired) */}
+                        {project.proofMetrics && project.proofMetrics.length > 0 && (
+                          <div className="relative z-10 mt-4 grid grid-cols-2 gap-3 rounded-md border border-[var(--border-ink)] bg-[var(--paper)]/60 p-3 font-mono">
+                            {project.proofMetrics.map((pm) => (
+                              <div key={pm.label} className="min-w-0">
+                                <span className="block text-base font-bold text-[var(--red-ink)]">
+                                  {pm.value}
+                                </span>
+                                <span className="block truncate text-[10px] uppercase tracking-wider text-[var(--muted)]">
+                                  {pm.label}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
 
                         <p className="relative z-10 mt-4 border-t border-dashed border-[var(--border-ink)] pt-3 font-mono text-[11px] leading-relaxed text-[var(--ink-soft)]">
                           <strong className="text-[var(--red-ink)]">CHECKS: </strong>

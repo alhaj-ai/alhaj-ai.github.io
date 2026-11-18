@@ -26,6 +26,10 @@
 - [x] [DONE] Apply `humanizer` prose pass across all UI copy and remove unused legacy components
 - [x] [DONE] Final verification (`tsc --noEmit`, tests, `next build`), PR merge to `main`, and live GitHub Pages check
 
+## Phase 5: Concise Outcome-First Copy & Portfolio Refinement
+- [x] [DONE] Update `lib/portfolio-data.ts`, `lib/__tests__/portfolio-helpers.test.ts`, and `Notebook*` components with concise, humanized, outcome-first copy (4-pillar toolkit without arbitrary skill percentages, tightened 2-sentence project cards with verified proof metrics, Education/Experience/Mentoring journey, and 3 engineering principles)
+- [x] [DONE] Run `typecheck` (0 errors), 6/6 unit tests with `tsx`, and `next build` static export (`out/` generated successfully), updating `CODEBASE_MAP.md` and `PROJECT_PLAN.md`
+
 ## Current Sprint
-**Active Task**: Phase 4 — Shipped Ruled Engineering Notebook & 3D LLM/RAG Architecture live on `alhaj-ai.github.io`
+**Active Task**: Phase 5 — Concise Outcome-First Copy & Portfolio Refinement
 **Status**: ✅ COMPLETE

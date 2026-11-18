@@ -1,7 +1,7 @@
 "use client";
 
 import { type FormEvent, useState } from "react";
-import { ArrowUpRight, Check, Copy, GitFork, Linkedin, Mail, ShieldCheck, Twitter } from "lucide-react";
+import { ArrowUpRight, Check, Copy, GitFork, Linkedin, Mail, Phone, ShieldCheck, Twitter } from "lucide-react";
 import { PROFILE, VERIFIED_METRICS } from "@/lib/portfolio-data";
 
 export function NotebookAboutAndContact() {
@@ -71,7 +71,7 @@ export function NotebookAboutAndContact() {
 
         <div className="flex flex-col justify-center px-5 py-16 sm:px-10 lg:px-14">
           <p className="nb-eyebrow">
-            <span className="nb-num">06</span>
+            <span className="nb-num">07</span>
             <span>About Mohammed</span>
           </p>
           <h2 className="mt-4 font-hand text-5xl font-bold leading-[0.86] tracking-tight text-[var(--ink)] sm:text-6xl">
@@ -98,14 +98,14 @@ export function NotebookAboutAndContact() {
         </div>
       </section>
 
-      {/* 07 // Start a Conversation */}
+      {/* 08 // Start a Conversation */}
       <section
         id="contact"
         className="grid gap-10 border-b-2 border-[var(--ink)] bg-[rgba(239,224,190,0.38)] px-5 py-20 dark:bg-transparent sm:px-10 md:px-[6.5vw] lg:grid-cols-[0.85fr_1.15fr] lg:gap-16"
       >
         <div>
           <p className="nb-eyebrow">
-            <span className="nb-num">07</span>
+            <span className="nb-num">08</span>
             <span>Get In Touch</span>
           </p>
           <h2 className="mt-4 font-hand text-5xl font-bold leading-[0.86] tracking-tight text-[var(--ink)] sm:text-6xl">
@@ -114,10 +114,10 @@ export function NotebookAboutAndContact() {
             to <span className="text-[var(--red-ink)]">ship?</span>
           </h2>
           <p className="mt-5 max-w-md font-hand text-xl leading-[1.45] text-[var(--ink-soft)]">
-            Available for remote roles in AI engineering, model fine-tuning, agent reliability, and RAG backends.
+            Available for remote AI engineering, LLM fine-tuning, agent reliability, and RAG backends.
           </p>
 
-          <div className="mt-6 flex flex-wrap items-center gap-4">
+          <div className="mt-6 flex flex-wrap items-center gap-3">
             <a
               href={`mailto:${PROFILE.links.email}`}
               className="inline-flex items-center gap-2 border-b-2 border-[var(--ink)] pb-1 font-hand text-2xl font-bold text-[var(--ink)] hover:text-[var(--red-ink)]"
@@ -143,6 +143,18 @@ export function NotebookAboutAndContact() {
                 </>
               )}
             </button>
+
+            <a
+              href={`tel:${PROFILE.phone}`}
+              className="inline-flex items-center gap-1.5 rounded border border-dashed border-[var(--ink)] bg-[var(--paper-card)] px-3 py-1.5 font-mono text-xs font-bold text-[var(--ink)] hover:bg-[var(--mustard)]"
+            >
+              <Phone className="h-3.5 w-3.5 text-[var(--red-ink)]" aria-hidden="true" />
+              {PROFILE.phone}
+            </a>
+          </div>
+
+          <div className="mt-6 font-mono text-xs text-[var(--muted)]">
+            <span>⌖ {PROFILE.location}</span>
           </div>
         </div>
 
@@ -202,7 +214,7 @@ export function NotebookAboutAndContact() {
       {/* Bold Mustard-Gold Architectural Footer (Signature closing band) */}
       <footer className="bg-[var(--footer-gold)] px-5 pb-8 pt-20 text-[#29384a] sm:px-10 md:px-[6.5vw] dark:text-[#071006]">
         <p className="inline-flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-widest">
-          <span>08</span>
+          <span>09</span>
           <span>LET&apos;S BUILD RELIABLE AI ✎</span>
         </p>
 

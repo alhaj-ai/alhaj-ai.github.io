@@ -22,20 +22,20 @@
 ## 4. Data Models & Schemas
 | Model Name | File Path | Description |
 |---|---|---|
-| `PROFILE`, `VERIFIED_METRICS`, `ARCHITECTURE_STAGES`, `FLAGSHIP_PROJECTS`, `DOMAIN_PROJECTS`, `CREDENTIALS`, `SKILL_GROUPS`, `CODE_SHOWCASE_TABS`, `MARQUEE_STACK`, `COMPANION_QUICK_PROMPTS` | `lib/portfolio-data.ts` | Verified portfolio copy, repository stats, pipeline nodes, code snippets, credentials, and skill taxonomy |
+| `PROFILE`, `VERIFIED_METRICS`, `ENGINEERING_PRINCIPLES`, `CORE_TOOLKIT_DOMAINS`, `JOURNEY_TIMELINE`, `ARCHITECTURE_STAGES`, `FLAGSHIP_PROJECTS`, `DOMAIN_PROJECTS`, `CREDENTIALS`, `SKILL_GROUPS`, `CODE_SHOWCASE_TABS`, `MARQUEE_STACK`, `COMPANION_QUICK_PROMPTS` | `lib/portfolio-data.ts` | Verified portfolio copy, repository stats, 4-pillar toolkit, 3 engineering principles, journey timeline, flagship proof metrics, pipeline nodes, credentials, and skill taxonomy |
 | `filterFlagshipProjects`, `filterDomainProjects`, `answerPortfolioQuery` | `lib/portfolio-helpers.ts` | Shared category/query filter logic and zero-hallucination deterministic AI Companion query matcher |
-| Unit tests | `lib/__tests__/portfolio-helpers.test.ts` | Node built-in test suite covering project filtering and AI Companion prompt/fallback handling |
+| Unit tests | `lib/__tests__/portfolio-helpers.test.ts` | Node built-in test suite covering project filtering, proof metrics, toolkit domains, principles, journey entries, and AI Companion prompt/fallback handling |
 
 ## 5. Reusable Components & Shared Utilities
 | Name | Path | Purpose |
 |---|---|---|
 | `InteractiveParticleNetwork` | `components/InteractiveParticleNetwork.tsx` | Mouse-reactive physics particle constellation synced to notebook ink / dark theme palette |
 | `NeuralHarness3D` | `components/NeuralHarness3D.tsx` | Interactive Three.js WebGL architecture stage (LLM + Harness core, Hybrid RAG vector cube & query rays, Multi-Agent loop) |
-| `NotebookNav` | `components/NotebookNav.tsx` | Sticky frosted paper navbar, 2-column ruled mobile drawer, optional dark ink toggle |
-| `NotebookHero` | `components/NotebookHero.tsx` | Ruled paper hero with `Caveat` display heading, mustard pill CTA, cycling `ExpertisePulse` note, and 4-column Signal Strip |
-| `NotebookToolkitAndWork` | `components/NotebookToolkitAndWork.tsx` | Animated `0% -> N%` skill matrix bars, 7-domain expandable stack, filterable Flagship 6 tilted cards + 8 Domain repos |
-| `NotebookDemosAndJourney` | `components/NotebookDemosAndJourney.tsx` | 6-tab Systems in Motion browser stage + 3D-tilted Architecture Pipeline Journey + DeepMind/IBM/Anthropic Credentials |
-| `NotebookAboutAndContact` | `components/NotebookAboutAndContact.tsx` | Engineering dossier, About narrative, notebook contact form, and bold Mustard Gold Footer |
+| `NotebookNav` | `components/NotebookNav.tsx` | Sticky frosted paper navbar, 2-column ruled mobile drawer with 9-section anchors, optional dark ink toggle |
+| `NotebookHero` | `components/NotebookHero.tsx` | Ruled paper hero with punchy headline, mustard pill CTA, cycling `ExpertisePulse` note, location badge, and 4-column Signal Strip |
+| `NotebookToolkitAndWork` | `components/NotebookToolkitAndWork.tsx` | 4 Core Engineering Domains + 3 Core Engineering Principles + expandable 7-domain stack, filterable Flagship cards with proof metrics + 8 Domain repos |
+| `NotebookDemosAndJourney` | `components/NotebookDemosAndJourney.tsx` | 6-tab Systems in Motion browser stage + 3D Architecture Pipeline Journey + DeepMind/IBM/Anthropic Credentials + Education/Mentoring Journey & Languages strip |
+| `NotebookAboutAndContact` | `components/NotebookAboutAndContact.tsx` | Engineering dossier, About narrative, direct email/phone/social contact links, notebook inquiry draft form, and bold Mustard Gold Footer |
 
 ## 6. Dependency Graph & Hot Spots
 - Static assets: `public/.nojekyll`, `public/robots.txt`, `public/sitemap.xml`, `public/badges/deepmind-train-slm.png`, `public/badges/deepmind-build-slm.png`
