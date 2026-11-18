@@ -11,6 +11,7 @@ const NAV_ITEMS = [
   { id: "demos", label: "Demos" },
   { id: "systems", label: "Systems" },
   { id: "credentials", label: "Badges" },
+  { id: "journey", label: "Journey" },
   { id: "about", label: "About" },
   { id: "contact", label: "Contact" },
 ] as const;
@@ -105,8 +106,8 @@ export function NotebookNav() {
           <span className="text-[var(--red-ink)]">.</span>
         </a>
 
-        <nav aria-label="Main navigation" className="hidden items-center gap-6 lg:flex">
-          {NAV_ITEMS.slice(1, 7).map((item) => {
+        <nav aria-label="Main navigation" className="hidden items-center gap-5 lg:flex xl:gap-6">
+          {NAV_ITEMS.slice(1, 8).map((item) => {
             const active = activeId === item.id;
             return (
               <a

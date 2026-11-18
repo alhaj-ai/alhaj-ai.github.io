@@ -45,16 +45,13 @@ export function NotebookHero() {
         <div className="relative z-[4] max-w-[780px]">
           <p className="nb-eyebrow">
             <span className="nb-num">01</span>
-            <span>AI ENGINEER · LLMS · RAG · AGENT SYSTEMS</span>
+            <span>AI ENGINEER · LLMS · RAG · AGENT HARNESSES</span>
           </p>
 
           <h1 className="mt-5 font-hand text-[3.5rem] font-bold leading-[0.82] tracking-[-0.025em] text-[var(--ink)] sm:text-[5rem] lg:text-[6.25rem]">
-            I build AI
+            {PROFILE.heroHeadline}
             <br />
-            that{" "}
-            <span className="text-[var(--red-ink)]">holds up</span>
-            <br />
-            in production.
+            <span className="text-[var(--red-ink)]">{PROFILE.heroSubheadline}</span>
           </h1>
 
           <p className="mt-6 max-w-[660px] font-hand text-xl font-medium leading-[1.42] text-[#4f5d6c] dark:text-[#b0b8ad] sm:text-[1.45rem]">
@@ -76,6 +73,11 @@ export function NotebookHero() {
               <GitFork className="h-4 w-4" aria-hidden="true" />
               GitHub (@{PROFILE.handle})
             </a>
+          </div>
+
+          <div className="mt-5 flex items-center gap-2 font-mono text-xs text-[var(--ink-soft)]">
+            <span className="inline-block h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span>⌖ {PROFILE.location}</span>
           </div>
         </div>
 
